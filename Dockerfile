@@ -5,8 +5,8 @@ RUN apt-get update -y
 RUN apt-get install -y ca-certificates
 
 # Install curl/wget
-RUN apt-get install curl
-RUN apt-get install wget
+RUN apt-get install -y curl
+RUN apt-get install -y wget
 
 
 # Install kubectl
