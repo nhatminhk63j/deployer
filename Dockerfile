@@ -4,9 +4,13 @@ FROM ubuntu:20.04
 RUN apt-get update -y
 RUN apt-get install -y ca-certificates
 
-# Install curl/wget
+# Install curl/wget/git
+RUN apt-get update -y
 RUN apt-get install -y curl
+RUN apt-get update -y
 RUN apt-get install -y wget
+RUN apt-get update -y
+RUN apt-get install -y git
 
 
 # Install kubectl
@@ -17,7 +21,7 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 # Install helmfile
 RUN wget -O helmfile_linux_amd64 https://github.com/roboll/helmfile/releases/download/v0.135.0/helmfile_linux_amd64
 RUN chmod +x helmfile_linux_amd64
-RUN mv helmfile_linux_amd64 ~/.local/bin/helmfile
+RUN mv helmfile_linux_amd64 /usr/local/bin/helmfile
 
 # Install helm
 RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -27,10 +31,10 @@ RUN ./get_helm.sh
 RUN helm plugin install https://github.com/databus23/helm-diff
 
 # Install yq
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-RUN add-apt-repository ppa:rmescandon/yq
-RUN apt update
-RUN apt install yq -y
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+RUN chmod a+x /usr/local/bin/yq
 
 # Install niet
-RUN pip install niet
+RUN apt-get update -y
+RUN apt-get install -y python3-pip
+RUN pip3 install niet
