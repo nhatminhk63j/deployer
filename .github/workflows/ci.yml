@@ -1,8 +1,9 @@
 name: gitops-CI
 
-on: 
-  # workflow dispatch requires manual trigger
-  workflow_dispatch:
+on:
+  push:
+    branches:
+    - master
 
 jobs:
   build:
