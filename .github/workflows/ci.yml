@@ -1,0 +1,23 @@
+name: gitops-CI
+
+on: 
+  # workflow dispatch requires manual trigger
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2
+
+      - name: build and push docker image
+        uses: docker/build-push-action@v1.1.0
+        with: 
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          repository: ${{ secrets.USERNAME }}/deployer
+          tags: ${{ github.sha }}, latest
+          path: ./
