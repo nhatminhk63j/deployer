@@ -4,23 +4,24 @@ FROM ubuntu:20.04
 RUN apt-get update -y
 RUN apt-get install -y ca-certificates
 
-# Install curl
+# Install curl/wget
 RUN apt-get install curl
+RUN apt-get install wget
 
 
 # Install kubectl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.24.0/bin/linux/amd64/kubectl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.24.0/bin/linux/amd64/kubectl
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin/kubectl
 RUN kubectl version
 
 # Install helmfile
-wget -O helmfile_linux_amd64 https://github.com/roboll/helmfile/releases/download/v0.135.0/helmfile_linux_amd64
+RUN wget -O helmfile_linux_amd64 https://github.com/roboll/helmfile/releases/download/v0.135.0/helmfile_linux_amd64
 RUN chmod +x helmfile_linux_amd64
 RUN mv helmfile_linux_amd64 ~/.local/bin/helmfile
 
 # Install helm
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 RUN chmod 700 get_helm.sh
 RUN ./get_helm.sh
 
@@ -33,4 +34,4 @@ RUN apt update
 RUN apt install yq -y
 
 # Install niet
-pip install niet
+RUN pip install niet
